@@ -88,15 +88,50 @@ describe("Persistent Node Chat Server", function() {
         dbConnection.query(queryString, queryArgs, function(err) {
           if (err) { throw err; }
 
-        // Now query the Node chat server and see if it returns
-        // the message we just inserted:
-        request("http://127.0.0.1:3000/classes/messages", function(error, response, body) {
-          var messageLog = JSON.parse(body);
-          expect(messageLog[0].message).to.equal("Men like you can never change!");
-          expect(messageLog[0].roomname).to.equal("main");
-          done();
-        });
-      });  
+          // Now query the Node chat server and see if it returns
+          // the message we just inserted:
+          request("http://127.0.0.1:3000/classes/messages", function(error, response, body) {
+            var messageLog = JSON.parse(body);
+            expect(messageLog[0].message).to.equal("Men like you can never change!");
+            expect(messageLog[0].roomname).to.equal("main");
+            done();
+          });
+        });  
+      });
     });
   });
+
+  it("Should get messages from the DB", function(done) {
+    // Let's insert a message into the db
+      request({ method: "GET",
+              uri: "http://127.0.0.1:3000/classes/messages",
+      }, function () {
+        var queryString = "SELECT * from messages";
+        var queryArgs = [];
+      // TODO - The exact query string and query args to use
+      // here depend on the schema you design, so I'll leave
+      // them up to you. */
+
+        dbConnection.query(queryString, queryArgs, function(err) {
+          if (err) { throw err; }
+
+          // Now query the Node chat server and see if it returns
+          // the message we just inserted:
+          request("http://127.0.0.1:3000/classes/messages", function(error, response, body) {
+            console.log(body);
+            var messageLog = JSON.parse(body);
+            expect(messageLog[0].message).to.equal("Hello world");
+            expect(messageLog[0].roomname).to.equal("hr8");
+            done();
+          });
+        });  
+      });
+  });
+  
 });
+
+
+
+
+
+
