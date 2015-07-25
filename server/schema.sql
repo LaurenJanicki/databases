@@ -24,7 +24,8 @@ CREATE TABLE roomnames (
 
 /* Create other tables and define schemas for them here! */
 
-
+ALTER TABLE messages ADD FOREIGN KEY (userId) REFERENCES usernames(user_id);
+ALTER TABLE messages ADD FOREIGN KEY (roomId) REFERENCES roomnames(room_id);
 
 
 /*  Execute this file from the command line by typing:

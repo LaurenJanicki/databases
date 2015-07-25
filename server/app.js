@@ -1,5 +1,8 @@
 var express = require('express');
 var db = require('./db');
+var requestHandler = require('./request-handler');
+var utils = require('./utils');
+var dbConnection = require('./db/index');
 
 // Middleware
 var morgan = require('morgan');
@@ -30,3 +33,11 @@ if (!module.parent) {
   console.log("Listening on", app.get("port"));
 }
 
+// Create database dbConnection
+dbConnection.connection.connect(function(err){
+if(!err) {
+    console.log("Database is connected ... \n\n");  
+} else {
+    console.log("Error connecting database ... \n\n");  
+}
+});
