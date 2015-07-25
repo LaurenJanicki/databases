@@ -6,9 +6,8 @@ module.exports = {
   messages: {
     get: function (callback) {
       console.log("models: ");
-      db.connection.connect();
       console.log("before query");
-      db.connection.query('SELECT * FROM messages, usernames, roomnames WHERE messages.userId = usernames.user_id and messages.roomId = roomnames.room_id',
+      db.connection.query("SELECT * FROM messages, usernames, roomnames WHERE messages.userId = usernames.user_id and messages.roomId = roomnames.room_id",
       function(err, rows, fields) {
         console.log("after query");
         if(!err) {
@@ -18,9 +17,8 @@ module.exports = {
           console.log("error during query");
         }
       });
-      db.connection.end();
     }, // a function which produces all the messages
-    post: function () {
+    // post: function () {
     //   db.connection.query("insert into messages 
     //     (message, createdAt, userId, roomId) 
     //     values ('Hello world', '2015-07-24 05:05:05', 
@@ -28,7 +26,6 @@ module.exports = {
     //     (SELECT room_id FROM roomnames WHERE roomname = 'hr8'))");
     // } // a function which can be used to insert a message into the database
     },
-  },
   
 
   users: {

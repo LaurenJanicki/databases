@@ -11,7 +11,7 @@ module.exports = {
 
       // };});
       models.messages.get(function(rows){
-        console.log("insideget:", rows);
+        console.log("inside controller", rows);
         res.json({results: rows});
       });
 
