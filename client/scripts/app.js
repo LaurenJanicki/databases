@@ -38,16 +38,16 @@ app = {
     renderMessage: function(message){
       var $user = $("<div>", {class: 'user'}).text(message.username);
       var $text = $("<div>", {class: 'text'}).text(message.text);
-      var $message = $("<div>", {class: 'chat', 'data-id': message.objectId }).append($user, $text);
+      var $message = $("<div>", {class: 'chat', 'data-id': message.message_id }).append($user, $text);
       return $message;
     },
 
     displayMessage: function(message){
       if( app.blockedUsers.indexOf(message.username) < 0 ){
-        if( !app.onscreenMessages[message.objectId] ){
+        if( !app.onscreenMessages[message.message_id] ){
           var $html = app.renderMessage(message);
           $('#chats').prepend($html);
-          app.onscreenMessages[message.objectId] = true;
+          app.onscreenMessages[message.message_id] = true;
         }
       }
     },
@@ -55,6 +55,7 @@ app = {
     displayMessages: function(messages){
       for( var i = 0; i < messages.length; i++ ){
         app.displayMessage(messages[i]);
+        console.log('displaying messages');
       }
     },
 
@@ -80,7 +81,7 @@ app = {
         data: JSON.stringify(message),
         contentType: 'application/json',
         success: function(json){
-          message.objectId = json.objectId;
+          message.message_id = json.message_id;
           app.displayMessage(message);
         },
         complete: function(){
